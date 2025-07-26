@@ -2,11 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Media Converter Design System - Dark Theme with Purple/Blue Gradients */
-
 @layer base {
   :root {
-    /* Dark theme base colors */
     --background: 240 6% 8%;
     --foreground: 0 0% 98%;
 
@@ -16,19 +13,16 @@
     --popover: 240 6% 10%;
     --popover-foreground: 0 0% 98%;
 
-    /* Purple/Blue gradient primary */
     --primary: 262 100% 65%;
     --primary-foreground: 0 0% 100%;
     --primary-glow: 280 100% 70%;
 
-    /* Subtle secondary */
     --secondary: 240 5% 15%;
     --secondary-foreground: 0 0% 90%;
 
     --muted: 240 4% 16%;
     --muted-foreground: 240 5% 65%;
 
-    /* Accent blue */
     --accent: 217 91% 60%;
     --accent-foreground: 0 0% 100%;
 
@@ -41,25 +35,20 @@
 
     --radius: 0.75rem;
 
-    /* Success color */
     --success: 142 76% 36%;
     --success-foreground: 0 0% 98%;
 
-    /* Warning color */  
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 98%;
 
-    /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(262 100% 65%), hsl(280 100% 70%));
     --gradient-secondary: linear-gradient(135deg, hsl(240 5% 15%), hsl(240 6% 20%));
     --gradient-background: linear-gradient(135deg, hsl(240 6% 8%), hsl(240 6% 12%));
 
-    /* Shadows */
     --shadow-primary: 0 10px 30px -10px hsl(262 100% 65% / 0.3);
     --shadow-glow: 0 0 40px hsl(262 100% 65% / 0.2);
     --shadow-card: 0 4px 20px hsl(240 6% 4% / 0.3);
 
-    /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
@@ -132,7 +121,6 @@
 }
 
 @layer components {
-  /* Custom component styles using design system */
   .gradient-primary {
     background: var(--gradient-primary);
   }
@@ -161,17 +149,14 @@
     transition: var(--transition-bounce);
   }
   
-  /* Animated underline effect */
   .animated-underline {
     @apply relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
   }
   
-  /* Hover scale effect */
   .hover-scale {
     @apply transition-transform duration-200 hover:scale-105;
   }
   
-  /* Pulse glow effect */
   .pulse-glow {
     @apply animate-pulse;
     box-shadow: 0 0 20px hsl(var(--primary) / 0.5);

@@ -1,6 +1,5 @@
 import { ValidationResult } from '@/types/converter';
 
-// Wzorce URL dla różnych platform
 const URL_PATTERNS = {
   youtube: [
     /^https?:\/\/(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[a-zA-Z0-9_-]{11}/,
@@ -16,7 +15,6 @@ const URL_PATTERNS = {
 };
 
 export const validateUrl = (url: string): ValidationResult => {
-  // Sprawdź czy URL nie jest pusty
   if (!url.trim()) {
     return {
       isValid: false,
@@ -24,7 +22,6 @@ export const validateUrl = (url: string): ValidationResult => {
     };
   }
 
-  // Sprawdź podstawowy format URL
   try {
     new URL(url);
   } catch {
@@ -34,7 +31,6 @@ export const validateUrl = (url: string): ValidationResult => {
     };
   }
 
-  // Sprawdź czy URL pasuje do obsługiwanych platform
   const allPatterns = [
     ...URL_PATTERNS.youtube,
     ...URL_PATTERNS.spotify,
@@ -66,11 +62,9 @@ export const detectPlatform = (url: string): string | null => {
   return null;
 };
 
-// Sprawdzenie czy format jest kompatybilny z platformą
 export const isFormatCompatible = (url: string, format: 'mp3' | 'mp4'): boolean => {
   const platform = detectPlatform(url);
   
-  // Spotify zazwyczaj tylko audio (MP3)
   if (platform === 'Spotify' && format === 'mp4') {
     return false;
   }

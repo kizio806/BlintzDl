@@ -39,7 +39,6 @@ export const convertMedia = async (request: ConvertRequest): Promise<ConvertResp
       throw error;
     }
     
-    // Network errors, timeout, itp.
     if (error instanceof TypeError) {
       throw new ApiError('Błąd połączenia z serwerem. Sprawdź połączenie internetowe.');
     }
@@ -48,7 +47,6 @@ export const convertMedia = async (request: ConvertRequest): Promise<ConvertResp
   }
 };
 
-// Helper do pobierania pliku
 export const downloadFile = (downloadUrl: string, filename?: string) => {
   const link = document.createElement('a');
   link.href = downloadUrl;
@@ -57,7 +55,6 @@ export const downloadFile = (downloadUrl: string, filename?: string) => {
     link.download = filename;
   }
   
-  // Dodaj link do DOM, kliknij i usuń
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);

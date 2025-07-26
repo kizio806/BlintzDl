@@ -18,15 +18,12 @@ const MediaConverter = () => {
     downloadUrl: null,
     error: null,
   });
-
-  // Walidacja URL w czasie rzeczywistym
   const urlValidation = validateUrl(url);
   const detectedPlatform = url.trim() ? detectPlatform(url) : null;
   const isFormatValid = url.trim() ? isFormatCompatible(url, format) : true;
   const [convertedFilename, setConvertedFilename] = useState<string | null>(null);
 
   const handleConvert = useCallback(async () => {
-    // 1. Walidacja - na początku
     if (!urlValidation.isValid) {
       toast({
         title: "Błąd walidacji",
@@ -45,7 +42,6 @@ const MediaConverter = () => {
       return;
     }
 
-    // 2. Ustaw status przetwarzania
     setConversionState({
       status: 'processing',
       progress: 0,
@@ -54,13 +50,11 @@ const MediaConverter = () => {
     });
 
     try {
-      // 3. Wywołanie API konwersji
       const response = await convertMedia({
         url: url.trim(),
         format: format
       });
 
-      // 4. Zapis nazwy pliku i sukces
       setConvertedFilename(response.filename || null);
       setConversionState({
         status: 'completed',
@@ -87,11 +81,10 @@ const MediaConverter = () => {
     }
   }, [url, format, urlValidation, isFormatValid]);
 
-  // Pobieranie pliku
   const handleDownload = useCallback(() => {
     if (conversionState.downloadUrl && convertedFilename) {
       try {
-        downloadFile(conversionState.downloadUrl, convertedFilename); // ✅ użyj prawdziwej nazwy
+        downloadFile(conversionState.downloadUrl, convertedFilename);
 
         toast({
           title: "Pobieranie rozpoczęte",
@@ -108,7 +101,6 @@ const MediaConverter = () => {
   }, [conversionState.downloadUrl, convertedFilename]);
 
 
-  // Reset formularza
   const resetConverter = useCallback(() => {
     setUrl('');
     setConvertedFilename(null);
@@ -120,8 +112,6 @@ const MediaConverter = () => {
     });
   }, []);
 
-
-  // Ikona statusu
   const getStatusIcon = () => {
     switch (conversionState.status) {
       case 'processing':
@@ -135,7 +125,6 @@ const MediaConverter = () => {
     }
   };
 
-  // Tekst statusu
   const getStatusText = () => {
     switch (conversionState.status) {
       case 'processing':
@@ -152,14 +141,12 @@ const MediaConverter = () => {
     }
   };
 
-  // Czy można konwertować
   const canConvert = urlValidation.isValid && 
                     isFormatValid && 
                     conversionState.status !== 'processing';
 
   return (
     <div className="w-full max-w-2xl mx-auto space-y-6">
-      {/* Header */}
       <div className="text-center space-y-2 animate-fade-in">
         <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
           BlintzDL
@@ -169,10 +156,8 @@ const MediaConverter = () => {
         </p>
       </div>
 
-      {/* Main Converter Card */}
       <Card className="p-8 shadow-card border-border/50 animate-scale-in">
         <div className="space-y-6">
-          {/* URL Input */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-foreground">
               Link do konwersji
@@ -193,14 +178,12 @@ const MediaConverter = () => {
               <LinkIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             </div>
             
-            {/* Error message */}
             {url.trim() && !urlValidation.isValid && (
               <p className="text-sm text-destructive animate-fade-in">
                 {urlValidation.error}
               </p>
             )}
             
-            {/* Platform detection */}
             {detectedPlatform && urlValidation.isValid && (
               <div className="flex items-center gap-2 animate-fade-in">
                 <Badge variant="outline" className="text-xs">
@@ -211,7 +194,6 @@ const MediaConverter = () => {
             )}
           </div>
 
-          {/* Format Toggle */}
           <div className="space-y-3">
             <label className="text-sm font-medium text-foreground">
               Format wyjściowy
@@ -239,7 +221,6 @@ const MediaConverter = () => {
               </Button>
             </div>
             
-            {/* Format compatibility warning */}
             {url.trim() && !isFormatValid && (
               <p className="text-sm text-warning animate-fade-in">
                 ⚠️ Spotify obsługuje tylko format MP3
@@ -247,7 +228,6 @@ const MediaConverter = () => {
             )}
           </div>
 
-          {/* Status Display */}
           <div className="space-y-3">
             <div className="flex items-center gap-2">
               {getStatusIcon()}
@@ -257,7 +237,6 @@ const MediaConverter = () => {
             </div>
           </div>
 
-          {/* Action Buttons */}
           <div className="flex gap-3 pt-2">
             {conversionState.status === 'completed' && conversionState.downloadUrl ? (
               <>
@@ -299,7 +278,6 @@ const MediaConverter = () => {
         </div>
       </Card>
 
-      {/* Supported Services */}
       <div className="text-center space-y-3 animate-slide-up">
         <p className="text-sm text-muted-foreground">Obsługiwane serwisy:</p>
         <div className="flex justify-center gap-2">

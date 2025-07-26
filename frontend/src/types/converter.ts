@@ -1,16 +1,12 @@
-// Typy dla API konwertera mediów
-
 export type ConversionFormat = 'mp3' | 'mp4';
 
 export type ConversionStatus = 'idle' | 'processing' | 'completed' | 'error';
 
-// Request do API
 export interface ConvertRequest {
   url: string;
   format: ConversionFormat;
 }
 
-// Response z API
 export interface ConvertResponse {
   filename: null;
   success: boolean;
@@ -19,7 +15,6 @@ export interface ConvertResponse {
   error?: string;
 }
 
-// Status konwersji
 export interface ConversionState {
   status: ConversionStatus;
   progress: number;
@@ -27,7 +22,6 @@ export interface ConversionState {
   error: string | null;
 }
 
-// Walidacja URL
 export interface ValidationResult {
   isValid: boolean;
   error?: string;
