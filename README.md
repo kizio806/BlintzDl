@@ -1,7 +1,7 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18.x-green?logo=node.js)](https://nodejs.org)  
 [![License](https://img.shields.io/badge/license-MIT-lightgrey)](LICENSE)
 
-**BLINTZDL – lokalny konwerter multimediów z YouTube, Spotify i SoundCloud**  
+**BLINTZDL – lokalny konwerter multimediów z YouTube i SoundCloud**  
 Narzędzie do automatycznego pobierania i konwertowania plików audio i wideo do formatów mp3 oraz mp4.
 
 ---
@@ -18,7 +18,7 @@ Narzędzie do automatycznego pobierania i konwertowania plików audio i wideo do
 
 ## Opis
 
-BLINTZDL to lokalny konwerter służący do pobierania oraz konwertowania multimediów z serwisów YouTube, Spotify i SoundCloud do formatów mp3 (audio) oraz mp4 (wideo).
+BLINTZDL to lokalny konwerter służący do pobierania oraz konwertowania multimediów z serwisów YouTube i SoundCloud do formatów mp3 (audio) oraz mp4 (wideo).
 
 Umożliwia szybkie i automatyczne:  
 - Pobieranie materiałów audio i wideo  
