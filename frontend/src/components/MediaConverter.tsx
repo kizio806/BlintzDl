@@ -21,9 +21,7 @@ const MediaConverter = () => {
   const urlValidation = validateUrl(url);
   const detectedPlatform = url.trim() ? detectPlatform(url) : null;
   // Usuwamy warunek z Spotify, zakładamy, że mp3 i mp4 są kompatybilne dla YouTube i SoundCloud
-  const isFormatValid = url.trim()
-    ? (detectedPlatform === 'SoundCloud' ? format === 'mp3' : true)
-    : true;
+  const isFormatValid = url.trim() ? isFormatCompatible(url, format) : true;
   const [convertedFilename, setConvertedFilename] = useState<string | null>(null);
 
   const handleConvert = useCallback(async () => {
@@ -39,7 +37,7 @@ const MediaConverter = () => {
     if (!isFormatValid) {
       toast({
         title: "Niekompatybilny format",
-        description: "SoundCloud obsługuje tylko format MP3",
+        description: "⚠️ SoundCloud obsługuje tylko formaty audio: MP3, WAV, M4A, OGG, FLAC",
         variant: "destructive",
       });
       return;
@@ -197,39 +195,33 @@ const MediaConverter = () => {
             )}
             {url.trim() && detectedPlatform === 'SoundCloud' && !isFormatValid && (
               <p className="text-sm text-warning animate-fade-in">
-                ⚠️ SoundCloud obsługuje tylko format MP3
+                ⚠️ SoundCloud obsługuje tylko formaty audio: MP3, WAV, m4a, OGG, FLAC
               </p>
             )}
           </div>
 
-          <div className="space-y-3">
-            <label className="text-sm font-medium text-foreground">
-              Format wyjściowy
-            </label>
-            <div className="flex gap-2">
-              <Button
-                variant={format === 'mp3' ? 'default' : 'secondary'}
-                size="sm"
-                onClick={() => setFormat('mp3')}
-                disabled={conversionState.status === 'processing'}
-                className="flex items-center gap-2 transition-bounce"
-              >
-                <Music className="w-4 h-4" />
-                MP3
-              </Button>
-              <Button
-                variant={format === 'mp4' ? 'default' : 'secondary'}
-                size="sm"
-                onClick={() => setFormat('mp4')}
-                disabled={conversionState.status === 'processing'}
-                className="flex items-center gap-2 transition-bounce"
-              >
-                <Video className="w-4 h-4" />
-                MP4
-              </Button>
-            </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">Format wyjściowy</label>
+            <select
+              value={format}
+              onChange={(e) => setFormat(e.target.value as ConversionFormat)}
+              disabled={conversionState.status === 'processing'}
+              className="w-full bg-muted border border-border text-foreground text-sm rounded-xl px-4 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-150 disabled:opacity-50 dark:bg-zinc-900 dark:border-zinc-700"
+            >
+              <optgroup label="Audio">
+                <option value="mp3">MP3</option>
+                <option value="wav">WAV</option>
+                <option value="m4a">m4a</option>
+                <option value="ogg">OGG</option>
+                <option value="flac">FLAC</option>
+              </optgroup>
+              <optgroup label="Wideo">
+                <option value="mp4">MP4</option>
+                <option value="webm">WEBM</option>
+                <option value="mkv">MKV</option>
+              </optgroup>
+            </select>
           </div>
-
           <div className="space-y-3">
             <div className="flex items-center gap-2">
               {getStatusIcon()}

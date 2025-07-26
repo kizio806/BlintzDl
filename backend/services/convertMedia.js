@@ -10,21 +10,29 @@ async function convertMedia(url, format) {
   const uuid = randomUUID();
   const outputTemplate = path.join(downloadsDir, `dl-${uuid}.%(ext)s`);
 
+  const formatOptionsMap = {
+    mp3: { extractAudio: true, audioFormat: 'mp3' },
+    wav: { extractAudio: true, audioFormat: 'wav' },
+    m4a: { extractAudio: true, audioFormat: 'm4a' },
+    ogg: { extractAudio: true, audioFormat: 'vorbis' },
+    flac: { extractAudio: true, audioFormat: 'flac' },
+    mp4: { format: 'bestvideo+bestaudio', mergeOutputFormat: 'mp4' },
+    webm: { format: 'bestvideo+bestaudio', mergeOutputFormat: 'webm' },
+    mkv: { format: 'bestvideo+bestaudio', mergeOutputFormat: 'mkv' },
+  };
+
+  if (!formatOptionsMap[format]) {
+    throw new Error(`Nieobsługiwany format: ${format}`);
+  }
+
   const options = {
     output: outputTemplate,
     noCheckCertificates: true,
     preferFreeFormats: true,
     quiet: true,
+    ...formatOptionsMap[format],
   };
 
-  if (format === 'mp3') {
-    options.extractAudio = true;
-    options.audioFormat = 'mp3';
-  } else if (format === 'mp4') {
-    options.format = 'bestvideo+bestaudio';
-    options.mergeOutputFormat = 'mp4';
-  }
-  
   const result = await Promise.race([
     ytdlp(url, options),
     new Promise((_, reject) =>
@@ -36,6 +44,7 @@ async function convertMedia(url, format) {
   const file = files.find(f => f.startsWith(`dl-${uuid}`));
   if (!file) throw new Error('Nie znaleziono pobranego pliku.');
 
+  // Auto-cleanup po 10 min
   setTimeout(() => {
     try {
       fs.unlinkSync(path.join(downloadsDir, file));

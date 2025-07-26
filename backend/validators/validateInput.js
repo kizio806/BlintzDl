@@ -8,11 +8,12 @@ function validateInput(url, format) {
     !youtubeRegex.test(url) &&
     !soundcloudRegex.test(url)
   ) {
-    return 'Nieprawidłowy URL (obsługiwane: YouTube,SoundCloud).';
+    return 'Nieprawidłowy URL (obsługiwane: YouTube, SoundCloud).';
   }
 
-  if (!['mp3', 'mp4'].includes(format)) return 'Nieobsługiwany format.';
-  
+  const supportedFormats = ['mp3', 'wav', 'm4a', 'ogg', 'flac', 'mp4', 'webm', 'mkv'];
+  if (!supportedFormats.includes(format)) return `Nieobsługiwany format: ${format}`;
+
   return null;
 }
 

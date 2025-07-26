@@ -1,4 +1,7 @@
-export type ConversionFormat = 'mp3' | 'mp4';
+export type ConversionFormat =
+  | 'mp3' | 'wav' | 'm4a' | 'ogg' | 'flac'
+  | 'mp4' | 'webm' | 'mkv';
+
 
 export type ConversionStatus = 'idle' | 'processing' | 'completed' | 'error';
 

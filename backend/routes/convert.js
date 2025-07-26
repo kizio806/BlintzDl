@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { validateInput } = require('../validators/validateInput');
-const { convertMedia } = require('../services/converter');
+const { convertMedia } = require('../services/convertMedia');
 
 router.post('/', async (req, res) => {
   const { url, format } = req.body;
