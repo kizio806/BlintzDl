@@ -285,9 +285,6 @@ const MediaConverter = () => {
             YouTube
           </Badge>
           <Badge variant="secondary" className="transition-smooth hover:bg-primary/10">
-            Spotify
-          </Badge>
-          <Badge variant="secondary" className="transition-smooth hover:bg-primary/10">
             SoundCloud
           </Badge>
         </div>
