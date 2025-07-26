@@ -20,7 +20,10 @@ const MediaConverter = () => {
   });
   const urlValidation = validateUrl(url);
   const detectedPlatform = url.trim() ? detectPlatform(url) : null;
-  const isFormatValid = url.trim() ? isFormatCompatible(url, format) : true;
+  // Usuwamy warunek z Spotify, zakładamy, że mp3 i mp4 są kompatybilne dla YouTube i SoundCloud
+  const isFormatValid = url.trim()
+    ? (detectedPlatform === 'SoundCloud' ? format === 'mp3' : true)
+    : true;
   const [convertedFilename, setConvertedFilename] = useState<string | null>(null);
 
   const handleConvert = useCallback(async () => {
@@ -36,11 +39,12 @@ const MediaConverter = () => {
     if (!isFormatValid) {
       toast({
         title: "Niekompatybilny format",
-        description: "Spotify obsługuje tylko format MP3",
+        description: "SoundCloud obsługuje tylko format MP3",
         variant: "destructive",
       });
       return;
     }
+
 
     setConversionState({
       status: 'processing',
@@ -100,7 +104,6 @@ const MediaConverter = () => {
     }
   }, [conversionState.downloadUrl, convertedFilename]);
 
-
   const resetConverter = useCallback(() => {
     setUrl('');
     setConvertedFilename(null);
@@ -152,7 +155,7 @@ const MediaConverter = () => {
           BlintzDL
         </h1>
         <p className="text-muted-foreground text-lg">
-          Konwertuj YouTube, SoundCloud i Spotify do MP3/MP4
+          Konwertuj YouTube i SoundCloud do MP3/MP4
         </p>
       </div>
 
@@ -165,7 +168,7 @@ const MediaConverter = () => {
             <div className="relative">
               <Input
                 type="url"
-                placeholder="https://youtube.com/watch?v=... lub https://open.spotify.com/..."
+                placeholder="https://youtube.com/watch?v=... lub https://soundcloud.com/..."
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 className={`pl-10 transition-smooth ${
@@ -191,6 +194,11 @@ const MediaConverter = () => {
                   {detectedPlatform}
                 </Badge>
               </div>
+            )}
+            {url.trim() && detectedPlatform === 'SoundCloud' && !isFormatValid && (
+              <p className="text-sm text-warning animate-fade-in">
+                ⚠️ SoundCloud obsługuje tylko format MP3
+              </p>
             )}
           </div>
 
@@ -220,12 +228,6 @@ const MediaConverter = () => {
                 MP4
               </Button>
             </div>
-            
-            {url.trim() && !isFormatValid && (
-              <p className="text-sm text-warning animate-fade-in">
-                ⚠️ Spotify obsługuje tylko format MP3
-              </p>
-            )}
           </div>
 
           <div className="space-y-3">
