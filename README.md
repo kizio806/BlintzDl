@@ -1,5 +1,5 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18.x-green?logo=node.js)](https://nodejs.org)  
-[![License](https://img.shields.io/badge/license-MIT-lightgrey)](LICENSE)
+[![License](https://img.shields.io/badge/license-Apache-lightgrey)](LICENSE)
 
 **BLINTZDL – lokalny konwerter multimediów z YouTube i SoundCloud**  
 Narzędzie do automatycznego pobierania i konwertowania plików audio i wideo do formatów mp3 oraz mp4.
@@ -68,7 +68,7 @@ node index.js
 
 ## Licencja
 
-Ten projekt jest objęty **licencją MIT**.   
+Ten projekt jest objęty **licencją Apache 2.0**.   
 Szczegóły znajdują się w pliku [LICENSE](./LICENSE).
 
 
